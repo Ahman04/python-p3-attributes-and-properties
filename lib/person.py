@@ -1,22 +1,34 @@
-#!/usr/bin/env python3
-
 class Person:
-    APPROVED_JOBS = ["Sales", "ITC", "HR", "Engineer", "Manager"]
+    approved_jobs = [
+        "Admin", "Customer Service", "Human Resources", "ITC", "Production",
+        "Legal", "Finance", "Sales", "General Management",
+        "Research & Development", "Marketing", "Purchasing"
+    ]
 
-    def __init__(self, name=None, job=None):
-        # Validate name
-        if not isinstance(name, str) or len(name) == 0 or len(name) > 25:
-            print("Name must be string between 1 and 25 characters.")
-            return
-        
-        # Save valid, title-cased name
-        self.name = name.title()
+    def __init__(self, name="John", job="ITC"):
+        self.name = name
+        self.job = job
 
-        # Validate job
-        if job is not None:
-            if job not in Person.APPROVED_JOBS:
-                print("Job must be in list of approved jobs.")
-                return
-            self.job = job
+    # NAME PROPERTY
+    def get_name(self):
+        return self._name
+
+    def set_name(self, value):
+        if isinstance(value, str) and 1 <= len(value) <= 25:
+            self._name = value.title()
         else:
-            self.job = None
+            print("Name must be string between 1 and 25 characters.")
+
+    name = property(get_name, set_name)
+
+    # JOB PROPERTY
+    def get_job(self):
+        return self._job
+
+    def set_job(self, value):
+        if value in Person.approved_jobs:
+            self._job = value
+        else:
+            print("Job must be in list of approved jobs.")
+
+    job = property(get_job, set_job)
